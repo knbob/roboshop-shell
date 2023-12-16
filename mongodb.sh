@@ -27,7 +27,7 @@ echo " Run the script with root access "
 exit 1
 fi
 
-cp /home/centos/roboshop.shell/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 VALIDATE $? "Copying mongo repo"
 
 dnf install mongodb-org -y &>> $LOGFILE
