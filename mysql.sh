@@ -5,9 +5,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
+MONGDB_HOST=mongodb.daws76s.online
 TIME=$(date +%F:%H:%M:%S)
-
 LOGFILE="/tmp/$0-$TIME.log"
 
 echo "Script execution started at $TIME" &>> $LOGFILE

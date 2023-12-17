@@ -25,18 +25,18 @@ if [ $ID == 0 ]
 then
 echo " Logged in as root user "
 else
-echo " Run the script with root access "
+echo -e "$R ERROR:: Run the script with root access $N "
 exit 1
 fi
 
 dnf module disable nodejs -y &>> $LOGFILE
-VALIDATE $? "Disabling nodejs"
+VALIDATE $? "Disabling current NodeJS"
 
-dnf module enable nodejs:18 -y &>> $LOGFILE
-VALIDATE $? "Enabling nodejs:18 version"
+dnf module enable nodejs:18 -y  &>> $LOGFILE
+VALIDATE $? "Enabling NodeJS:18"
 
-dnf install nodejs -y &>> $LOGFILE
-VALIDATE $? "Nodejs installation"
+dnf install nodejs -y  &>> $LOGFILE
+VALIDATE $? "Installing NodeJS:18"
 
 id roboshop &>> $LOGFILE
 if [ $? == 0 ]
@@ -50,13 +50,13 @@ else
 mkdir -p /app &>> $LOGFILE
 VALIDATE $? "creating app folder"
 
-curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
+curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
 VALIDATE $? "Downloading code"
 
 cd /app &>> $LOGFILE
 VALIDATE $? "Changing to app folder"
 
-unzip /tmp/cart.zip &>> $LOGFILE
+unzip -o /tmp/cart.zip &>> $LOGFILE
 VALIDATE $? "Unzipping the code"
 
 npm install &>> $LOGFILE

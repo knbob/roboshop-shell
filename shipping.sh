@@ -50,7 +50,7 @@ VALIDATE $? "Downloading code"
 cd /app &>> $LOGFILE
 VALIDATE $? "Changing to app directory"
 
-unzip /tmp/shipping.zip &>> $LOGFILE
+unzip -o /tmp/shipping.zip &>> $LOGFILE
 VALIDATE $? "Unzipping the file"
 
 mvn clean package &>> $LOGFILE

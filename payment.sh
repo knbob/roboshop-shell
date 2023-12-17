@@ -49,7 +49,7 @@ VALIDATE $? "Downloading payment.zip"
 cd /app  &>> $LOGFILE
 VALIDATE $? "Changing to app directory"
 
-unzip /tmp/payment.zip &>> $LOGFILE
+unzip -o /tmp/payment.zip &>> $LOGFILE
 VALIDATE $? "Unzipping the file"
 
 pip3.6 install -r requirements.txt &>> $LOGFILE
