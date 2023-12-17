@@ -48,8 +48,8 @@ fi
 mkdir -p /app &>> $LOGFILE
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOGFILE
-VALIDATE $? "Downloading app"
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip  &>> $LOGFILE
+VALIDATE $? "Downloading catalogue application"
 
 cd /app  &>> $LOGFILE
 VALIDATE $? "Chaning to directory app"
