@@ -41,7 +41,7 @@ VALIDATE $? "Nodejs installation"
 id roboshop &>> $LOGFILE
 if [ $? == 0 ]
 then
-echo " user already exists "
+echo " user already exists.........$Y SKIPPING $N "
 else
  useradd roboshop &>> $LOGFILE
  VALIDATE $? "roboshop user creation"
