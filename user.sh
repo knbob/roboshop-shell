@@ -29,7 +29,7 @@ echo " Run the script with root access "
 exit 1
 fi
 
-nf module disable nodejs -y &>> $LOGFILE
+dnf module disable nodejs -y &>> $LOGFILE
 VALIDATE $? "Disabling nodejs"
 
 dnf module enable nodejs:18 -y &>> $LOGFILE
@@ -74,7 +74,7 @@ VALIDATE $? "Enabling user"
 systemctl start user &>> $LOGFILE
 VALIDATE $? "Start user"
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Copying mongorepo"
 
 dnf install mongodb-org-shell -y &>> $LOGFILE
