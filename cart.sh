@@ -38,7 +38,7 @@ VALIDATE $? "Enabling nodejs:18 version"
 dnf install nodejs -y &>> $LOGFILE
 VALIDATE $? "Nodejs installation"
 
-id roboshop
+id roboshop &>> $LOGFILE
 if [ $? == 0 ]
 then
 echo " user already exists "

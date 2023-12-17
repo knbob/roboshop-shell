@@ -32,7 +32,7 @@ fi
 dnf install maven -y &>> $LOGFILE
 VALIDATE $? "Installing maven"
 
-id roboshop
+id roboshop &>> $LOGFILE
 if [ $? == 0 ]
 then
 echo -e "Used already existing...$Y skipping $N"
