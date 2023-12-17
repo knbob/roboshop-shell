@@ -74,6 +74,9 @@ VALIDATE $? "Enabling user"
 systemctl start user &>> $LOGFILE
 VALIDATE $? "Start user"
 
+cp mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "Copying mongorepo"
+
 dnf install mongodb-org-shell -y &>> $LOGFILE
 VALIDATE $? "Installing mongodb client"
 
