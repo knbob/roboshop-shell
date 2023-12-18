@@ -6,76 +6,76 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-TIME=$(date +%F:%H:%M:%S)
+TIMESTAMP=$(date +%F-%H-%M-%S)
+LOGFILE="/tmp/$0-$TIMESTAMP.log"
 
-LOGFILE="/tmp/$0-$TIME.log"
-
-echo "Script execution started at $TIME" &>> $LOGFILE
+echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
-    if [ $? == 0 ]
+    if [ $1 -ne 0 ]
     then
-    echo -e " $2.............$G SUCCESS $N"
+        echo -e "$2 ... $R FAILED $N"
+        exit 1
     else
-    echo -e " $2.............$R Failed $N"
+        echo -e "$2 ... $G SUCCESS $N"
     fi
 }
 
-if [ $ID == 0 ]
+if [ $ID -ne 0 ]
 then
-echo " Logged in as root user "
+    echo -e "$R ERROR:: Please run this script with root access $N"
+    exit 1 # you can give other than 0
 else
-echo " Run the script with root access "
-exit 1
-fi
+    echo "You are root user"
+fi # fi means reverse of if, indicating condition end
 
 dnf install maven -y &>> $LOGFILE
-VALIDATE $? "Installing maven"
+VALIDATE $? "Maven Installation"
 
-id roboshop &>> $LOGFILE
-if [ $? == 0 ]
+id roboshop &>> $LOGFILE #if roboshop user does not exist, then it is failure
+if [ $? -ne 0 ]
 then
-echo -e "Used already existing...$Y skipping $N"
+    useradd roboshop
+    VALIDATE $? "roboshop user creation"
 else
-useradd roboshop &>> $LOGFILE
-VALIDATE $? "Adding user roboshop"
+    echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-mkdir -p /app &>> $LOGFILE
-VALIDATE $? "Creating app directory"
+mkdir -p /app
+VALIDATE $? "creating app directory"
 
 curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>> $LOGFILE
-VALIDATE $? "Downloading code"
+VALIDATE $? "Downloading shipping"
 
-cd /app &>> $LOGFILE
-VALIDATE $? "Changing to app directory"
+cd /app
+VALIDATE $? "moving to app directory"
 
 unzip -o /tmp/shipping.zip &>> $LOGFILE
-VALIDATE $? "Unzipping the file"
+VALIDATE $? "unzipping shipping"
 
 mvn clean package &>> $LOGFILE
 VALIDATE $? "Installing dependencies"
 
-mv app/target/shipping-1.0.jar /app/target/shipping.jar
-VALIDATE $? "Shipping file renaming"
+mv target/shipping-1.0.jar shipping.jar &>> $LOGFILE
+VALIDATE $? "renaming jar file"
 
 cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
-VALIDATE $? "Copying shipping service"
+VALIDATE $? "copying shipping service"
 
 systemctl daemon-reload &>> $LOGFILE
-VALIDATE $? "Daemon reload"
+VALIDATE $? "deamon reload"
 
 systemctl enable shipping  &>> $LOGFILE
-VALIDATE $? "Enabling shipping"
+VALIDATE $? "enable shipping"
 
 systemctl start shipping &>> $LOGFILE
-VALIDATE $? "Starting shipping"
+VALIDATE $? "start shipping"
 
 dnf install mysql -y &>> $LOGFILE
-VALIDATE $? "Installing mysql"
+VALIDATE $? "install MySQL client"
 
-mysql -h mysql.knbob.online -uroot -pRoboShop@1 < /app/schema/shipping.sql  &>> $LOGFILE
-VALIDATE $? "Loading schema into mysql"
+mysql -h mysql.daws76s.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>> $LOGFILE
+VALIDATE $? "loading shipping data"
 
 systemctl restart shipping &>> $LOGFILE
-VALIDATE $? "Restart shipping"
+VALIDATE $? "restart shipping"
