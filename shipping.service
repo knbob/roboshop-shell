@@ -3,7 +3,7 @@ Description=Shipping Service
 
 [Service]
 User=roboshop
-Environment=CART_ENDPOINT=cart.knbob.online
+Environment=CART_ENDPOINT=cart.knbob.online:8080
 Environment=DB_HOST=mysql.knbob.online
 ExecStart=/bin/java -jar /app/shipping.jar
 SyslogIdentifier=shipping
