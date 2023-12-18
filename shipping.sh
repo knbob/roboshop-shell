@@ -56,7 +56,7 @@ VALIDATE $? "unzipping shipping"
 mvn clean package &>> $LOGFILE
 VALIDATE $? "Installing dependencies"
 
-mv target/shipping-1.0.jar shipping.jar &>> $LOGFILE
+mv -f /target/shipping-1.0.jar /app/target/shipping.jar &>> $LOGFILE
 VALIDATE $? "renaming jar file"
 
 cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
@@ -74,7 +74,7 @@ VALIDATE $? "start shipping"
 dnf install mysql -y &>> $LOGFILE
 VALIDATE $? "install MySQL client"
 
-mysql -h mysql.daws76s.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>> $LOGFILE
+mysql -h mysql.knbob.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>> $LOGFILE
 VALIDATE $? "loading shipping data"
 
 systemctl restart shipping &>> $LOGFILE
