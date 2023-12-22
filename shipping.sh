@@ -59,7 +59,7 @@ VALIDATE $? "Installing dependencies"
 cd /app
 VALIDATE $? "moving to app directory"
 
-mv -f /target/shipping-1.0.jar shipping.jar &>> $LOGFILE
+mv -f /app/target/shipping-1.0.jar shipping.jar &>> $LOGFILE
 VALIDATE $? "renaming jar file"
 
 cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
